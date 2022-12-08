@@ -6,10 +6,7 @@
         }
 </style>
 
-
-
-
-
+<x-loginorsignup type="signup"/>
 
 
 <x-footer/>
