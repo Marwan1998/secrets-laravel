@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SignupController;
+
 
 // ----------------------------- Testing Routes --------------------------------
 
@@ -46,3 +48,4 @@ Route::view('/unautorizedaccess', 'unautorizedaccess');
 
 Route::post('login', [LoginController::class, 'loginCheck']);
 
+Route::post('signup', [SignupController::class, 'registerNew']);

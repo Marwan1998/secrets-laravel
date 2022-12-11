@@ -10,7 +10,13 @@ class LoginController extends Controller
 {
     public function loginCheck(Request $req)
     {
-        // $pass = Hash::make('hello');
+        $roles = [
+            'name'=>'required | min:2',
+            'password'=>'required | min:3',
+            '_token'=>'required'
+        ];
+
+        $req->validate($roles);
 
         $user = $req->input();
         $username = $user['name'];
@@ -31,7 +37,10 @@ class LoginController extends Controller
             } else {
                 echo 'password is incorrect';
                 $req->session()->put('access', false);
-                return redirect('login');
+                return redirect()->back()->withErrors([
+                    'approve' => 'Wrong password or this account is not exsit.'
+                ]);
+                // return redirect('login');
             }
         } else {
             // return 'No username found';
