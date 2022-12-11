@@ -15,6 +15,9 @@ class CreateSecretsTable extends Migration
     {
         Schema::create('secrets', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable()->default('Title');
+            $table->string('content')->default('Describe your secret here...');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

@@ -1,5 +1,5 @@
 <x-header title="Home"/>
-<x-nav-bar name="{{ session('name') }}"/>
+<x-nav-bar name="{{ $name }}"/>
 <style>
 body {
     background-color: #264ECA;
@@ -7,7 +7,6 @@ body {
 </style>
 
 <h5 class="display-5 text-center text-info fw-bold pt-4">Secrets</h5>
-
 
 <div class="container my-4">
     <div class="row justify-content-center align-items-center">

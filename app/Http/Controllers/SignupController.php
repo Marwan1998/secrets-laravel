@@ -38,4 +38,9 @@ class SignupController extends Controller
         }
 
     }
+
+    public function testMethode()
+    {
+        return ['access' => 'good access'];
+    }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
+use App\Http\Controllers\HomeController;
 
 
 // ----------------------------- Testing Routes --------------------------------
@@ -11,20 +12,14 @@ Route::view('/sec', 'home');
 
 //----------------------------- Get Routes --------------------------------
 
-Route::get('/home', function () {
-    if (session()->has('name') && session()->get('access')) {
-        return view('home', ['name' => session('name')]);
-    } else {
-        return redirect('/unautorizedaccess');
-    }
-});
 
-Route::get('/', function () {
-    if (session()->has('name') && session()->get('access')) {
+Route::group(['middleware' => ['sessionCheck']], function () {
+    // Routes for only authenticated users.
+    Route::get('/home', [HomeController::class, 'renderSecrets']);
+    
+    Route::get('/', function () {
         return redirect('home');
-    } else {
-        return redirect('/login');
-    }
+    });
 });
 
 Route::get('/login', function () {
