@@ -3,8 +3,41 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    //
+    public function loginCheck(Request $req)
+    {
+        // $pass = Hash::make('hello');
+
+        $user = $req->input();
+        $username = $user['name'];
+        $userPassword = $user['password'];
+
+        $requestedUser = User::where('name', $username)->get();
+
+        // !empty($requestedUser)
+        if (count($requestedUser) !=0) {
+            $hashedPass = $requestedUser[0]['password'];
+            $userID = $requestedUser[0]['id'];
+            if (Hash::check($userPassword, $hashedPass)) {
+                $req->session()->put('name', $username); //will use it to display it in home page.
+                $req->session()->put('id', $userID); //will use this to get the cards.
+                $req->session()->put('access', true);
+                return redirect('home');
+
+            } else {
+                echo 'password is incorrect';
+                $req->session()->put('access', false);
+                return redirect('login');
+            }
+        } else {
+            // return 'No username found';
+            $req->session()->put('access', false);
+            return redirect('login');
+        }
+
+    }
 }

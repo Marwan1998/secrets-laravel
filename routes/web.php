@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 // ----------------------------- Testing Routes --------------------------------
 
@@ -8,12 +9,12 @@ Route::view('/sec', 'home');
 
 //----------------------------- Get Routes --------------------------------
 
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::get('/signup', function () {
-    return view('signup');
+Route::get('/home', function () {
+    if (session()->has('name') && session()->get('access')) {
+        return view('home', ['name' => session('name')]);
+    } else {
+        return redirect('/unautorizedaccess');
+    }
 });
 
 Route::get('/', function () {
@@ -24,17 +25,24 @@ Route::get('/', function () {
     }
 });
 
-Route::get('/home', function () {
-    if (session()->has('name') && session()->get('access')) {
-        return view('home');
-    } else {
-        return redirect('/unautorizedaccess');
-    }
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/signup', function () {
+    return view('signup');
+});
+
+Route::get('/logout', function () {
+    session()->flush();
+    session()->regenerate();
+    session()->put('access', false);
+    return redirect('/login');
 });
 
 Route::view('/unautorizedaccess', 'unautorizedaccess');
 
 //----------------------------- Post Routes --------------------------------
 
-Route::post('login', []);
+Route::post('login', [LoginController::class, 'loginCheck']);
 

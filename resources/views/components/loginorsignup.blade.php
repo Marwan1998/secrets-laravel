@@ -5,9 +5,9 @@
             <div class="w-50 justify-content-center">
                 <form action="{{ $type }}" method="POST" class="form-signup">
                     @csrf
-                    <input type="name" class="form-control" id="name" placeholder="Username">
+                    <input type="name" class="form-control" name="name" placeholder="Username" value="{{ old('name')}}">
                     <br>
-                    <input type="password" class="form-control" id="password" placeholder="Username">
+                    <input type="password" class="form-control" name="password" placeholder="Username">
                     <br>
                     <button type="submit" class="btn btn-primary">{{ ucfirst($type) }}</button>
                 </form>
