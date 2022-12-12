@@ -3,14 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Secret;
 
 class HomeController extends Controller
 {
     //
     public function renderSecrets()
     {
-        //TODO: find and send the correspond users secrets.
+        $userID = session('id');
+        $secrets = Secret::where('user_id', $userID)->get();
 
-        return view('home', ['name' => session('name'), 'secrets' => []]);
+        if (!$userID) {
+            return view('home', [
+                'name' => session('name'),
+                'secrets' => [],
+                'erorrs' => true
+            ]);
+        }
+
+        return view('home', [
+            'name' => session('name'),
+            'secrets' => $secrets,
+            'erorrs' => false
+        ]);
+
     }
 }
