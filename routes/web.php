@@ -17,9 +17,24 @@ Route::group(['middleware' => ['sessionCheck']], function () {
     // Routes for only authenticated users.
     Route::get('/home', [HomeController::class, 'renderSecrets']);
     
-    Route::get('/', function () {
-        return redirect('home');
-    });
+    // Route::get('/', function () {return redirect('home');}); //old redirect.
+    Route::redirect('/', '/home');
+
+    Route::get('/secret/add', [HomeController::class, 'showAdd']);
+
+    Route::post('/secret/add', [HomeController::class, 'addSecret']);
+
+    Route::get('/secret/edit/{id}', [HomeController::class, 'showEdit']);
+
+    Route::post('/secret/edit', [HomeController::class, 'editSecret']);
+
+    Route::get('/secret/delete/{id}', [HomeController::class, 'deleteSecret']);
+    
+
+
+    // Route::post('/secret/{value}', function () {
+    //     return redirect('/home');
+    // });
 });
 
 Route::get('/login', function () {

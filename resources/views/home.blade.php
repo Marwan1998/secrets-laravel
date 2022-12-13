@@ -21,14 +21,10 @@ body {
                 <div class="card-body">
                     <h5 class="card-title">{{ ucfirst($secret['title']) }}</h5>
                     <p class="card-text">{{ $secret['content'] }}</p>
-                    <form action="/home" method="POST">
-                        @csrf
-                        <input type="hidden" class="d-none" name="id" value="{{ $secret['id'] }}">
-                        <button class="card-link btn btn-link m-0 pe-1 text-decoration-none"
-                        style="font-weight: 600;" type="submitt">Delete</button>
-                        <button class="card-link btn btn-link m-0 ps-1 text-decoration-none"
-                        style="font-weight: 600;" type="submitt">Edit</button>
-                    </form>
+                    <a href="/secret/delete/{{$secret['id']}}" class="card-link m-0 pe-1 text-decoration-none"
+                    style="font-weight: 600;">Delete</a>
+                    <a href="/secret/edit/{{$secret['id']}}" class="card-link m-0 ps-1 text-decoration-none"
+                    style="font-weight: 600;">Edit</a>
                 </div>
             </div>
         </div>
