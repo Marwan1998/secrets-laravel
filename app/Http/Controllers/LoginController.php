@@ -25,7 +25,7 @@ class LoginController extends Controller
         $requestedUser = User::where('name', $username)->get();
 
         // !empty($requestedUser)
-        if (count($requestedUser) !=0) {
+        if (count($requestedUser) !=0) { // this should be: if(!empty($requestedUser) {}
             $hashedPass = $requestedUser[0]['password'];
             $userID = $requestedUser[0]['id'];
             if (Hash::check($userPassword, $hashedPass)) {
@@ -35,6 +35,7 @@ class LoginController extends Controller
                 return redirect('home');
 
             } else {
+                // should return 'password is incorrect',but i'm not returning this for security reasons.
                 echo 'password is incorrect';
                 $req->session()->put('access', false);
                 return redirect()->back()->withErrors([
@@ -43,9 +44,11 @@ class LoginController extends Controller
                 // return redirect('login');
             }
         } else {
-            // return 'No username found';
+            // return 'No username found', i'm not returning this for security reasons.
             $req->session()->put('access', false);
-            return redirect('login');
+            return redirect()->back()->withErrors([
+                'approve' => 'Wrong password or this account is not exsit.'
+            ]);
         }
 
     }
