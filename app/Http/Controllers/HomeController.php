@@ -8,7 +8,7 @@ use App\Models\Secret;
 class HomeController extends Controller
 {
     
-    // TODO: add /home Constant. const HOME = '/home';
+    public $secretPage = '/home'; // should be a constant.
     
     public function renderSecrets()
     {
@@ -16,14 +16,13 @@ class HomeController extends Controller
         $secrets = Secret::where('user_id', $userID)->get();
 
         if (!$userID) {
-            return view('home', [
+            return view($this->secretPage, [
                 'name' => session('name'),
                 'secrets' => [],
                 'erorrs' => true
             ]);
         }
-
-        return view('home', [
+        return view($this->secretPage, [
             'name' => session('name'),
             'secrets' => $secrets,
             'erorrs' => false
@@ -58,7 +57,7 @@ class HomeController extends Controller
             $this->setStatus($req, 'unexpected error: secret could not be added.');
         }
 
-        return redirect('/home');
+        return redirect($this->secretPage);
     }
 
     public function showEdit(Request $req)
@@ -66,7 +65,7 @@ class HomeController extends Controller
         $secretID = $req['id'];
 
         if (!$secretID) {
-            return redirect('/home');
+            return redirect($this->secretPage);
         }
 
         $secretData = Secret::where('id', $secretID)->first();
@@ -79,7 +78,7 @@ class HomeController extends Controller
         $secretID = $req['secretID'];
 
         if (!$secretID) {
-            return redirect('/home');
+            return redirect($this->secretPage);
         }
 
         $secret = Secret::find($secretID);
@@ -94,14 +93,14 @@ class HomeController extends Controller
             }
         }
         
-        return redirect('/home');
+        return redirect($this->secretPage);
     }
 
     public function deleteSecret(Request $req)
     {
         $secretID = $req['id'];
         if (!$secretID) {
-            return redirect('/home');
+            return redirect($this->secretPage);
         }
 
         $secret = Secret::find($secretID);
@@ -112,7 +111,7 @@ class HomeController extends Controller
             $this->setStatus($req, 'unexpected error: secret could not be deleted.');
         }
 
-        return redirect('/home');
+        return redirect($this->secretPage);
     }
 
     private function setStatus(Request $req, $message)
