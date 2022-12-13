@@ -7,7 +7,9 @@ use App\Models\Secret;
 
 class HomeController extends Controller
 {
-    //
+    
+    // TODO: add /home Constant. const HOME = '/home';
+    
     public function renderSecrets()
     {
         $userID = session('id');
@@ -50,6 +52,12 @@ class HomeController extends Controller
         $secrets->user_id = $userID;
         $result = $secrets->save();
 
+        if ($result) {
+            $this->setStatus($req, 'a secret has been saved successfully');
+        } else {
+            $this->setStatus($req, 'unexpected error: secret could not be added.');
+        }
+
         return redirect('/home');
     }
 
@@ -78,7 +86,12 @@ class HomeController extends Controller
         if ($secret) {
             $secret->title = $req['title'];
             $secret->content = $req['content'];
-            $secret->save();
+            $result = $secret->save();
+            if ($result) {
+                $this->setStatus($req, 'a secret has been edited successfully');
+            } else {
+                $this->setStatus($req, 'unexpected error: secret could not be edited.');
+            }
         }
         
         return redirect('/home');
@@ -92,10 +105,19 @@ class HomeController extends Controller
         }
 
         $secret = Secret::find($secretID);
-        $secret->delete();
+        $result = $secret->delete();
+        if ($result) {
+            $this->setStatus($req, 'a secret has been deleted successfully');
+        } else {
+            $this->setStatus($req, 'unexpected error: secret could not be deleted.');
+        }
 
         return redirect('/home');
     }
 
+    private function setStatus(Request $req, $message)
+    {
+        $req->session()->flash('status', "$message");
+    }
 
 }
