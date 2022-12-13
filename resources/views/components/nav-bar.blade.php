@@ -12,7 +12,7 @@
         </ul>
         <span class="btn btn-primary me-3 fw-bold border border-1" id="accountName" >{{ ucfirst($name) }}</span>
         <a class="btn btn-primary fw-bold me-3 border border-1" href="/secret/add">Add Secret</a>
-        <a class="btn btn-primary fw-bold me-3 border border-1 disabled" href="/settings">Setting</a>
+        <a class="btn btn-primary fw-bold me-3 border border-1" href="/settings">Setting</a>
         <a class="btn btn-primary fw-bold border border-1" href="/logout">Logut</a>
       </div>
     </div>

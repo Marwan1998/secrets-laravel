@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingsController;
 
 
 // ----------------------------- Testing Routes --------------------------------
@@ -30,7 +31,7 @@ Route::group(['middleware' => ['sessionCheck']], function () {
 
     Route::get('/secret/delete/{id}', [HomeController::class, 'deleteSecret']);
     
-
+    Route::get('/settings', [SettingsController::class, 'index']);
 
     // Route::post('/secret/{value}', function () {
     //     return redirect('/home');
