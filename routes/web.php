@@ -5,7 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SettingsController;
-
+use Barryvdh\Debugbar\Facades\Debugbar;
 
 // ----------------------------- Testing Routes --------------------------------
 
@@ -39,6 +39,9 @@ Route::group(['middleware' => ['sessionCheck']], function () {
 });
 
 Route::get('/login', function () {
+    Debugbar::info('login');
+    Debugbar::warning('Watch out…');
+
     return view('login');
 });
 
