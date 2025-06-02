@@ -25,7 +25,7 @@ body {
 <div class="container my-4">
     <div class="row justify-content-center align-items-center">
 
-        @if ($erorrs)
+        @if ($errors)
             <h4 class="text-center text-warning fw-bold pt-4">Error: No User ID Found</h4>
         @endif
     

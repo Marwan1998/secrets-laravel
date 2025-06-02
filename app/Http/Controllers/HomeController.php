@@ -19,13 +19,13 @@ class HomeController extends Controller
             return view($this->secretPage, [
                 'name' => session('name'),
                 'secrets' => [],
-                'erorrs' => true
+                'errors' => true
             ]);
         }
         return view($this->secretPage, [
             'name' => session('name'),
             'secrets' => $secrets,
-            'erorrs' => false
+            'errors' => false
         ]);
 
     }

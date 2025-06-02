@@ -20,7 +20,7 @@ class CheckSessionMiddleware
             // return view('home', ['name' => session('name')]);
             return $next($req);
         } else {
-            if ($req->server('REQUEST_URI') ==='/') {
+            if ($req->is('/')) {
                 return redirect('/login');
             }
             return redirect('/unautorizedaccess');
